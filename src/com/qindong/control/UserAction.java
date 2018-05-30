@@ -48,7 +48,7 @@ public class UserAction extends HttpServlet {
 		List<Map<String, Object>> l=DBUtil.query("select * from user where role=? and name=? and pwd=?",role,name,pwd);
 		if(l.size()>0){
 			HttpSession hs=request.getSession();
-			if(hs.getAttribute("sc") == null){
+			if(hs.getAttribute("sc") == null&&sc.size()!=0){
 				hs.setAttribute("sc",sc);hs.setAttribute("sb",sb);
 			}
 			if(hs.getAttribute("per_c") == null&&"teacher".equals(l.get(0).get("role")))hs.setAttribute("per_c",统计());
@@ -57,7 +57,7 @@ public class UserAction extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/"+("teacher".equals(l.get(0).get("role"))?"admin.jsp":"index.jsp")).forward(request, response);
 		}else{
 			request.setAttribute("msg",msg);
-			request.getRequestDispatcher("denglu.jsp").forward(request, response);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class UserAction extends HttpServlet {
 		}
 		for(int i=1;i<=4;i++)
 			answer_b.append(request.getParameter("brief"+i)+" ;;");
-		DBUtil.update("insert answer(s_name,sub_title,answer_c,answer_b,ct) values(?,'大学生学习情况问卷调查',?,?,now())",username,answer_c.toString(),answer_b.toString());
+		DBUtil.update("insert answer(s_name,sub_title,answer_c,answer_b) values(?,'大学生学习情况问卷调查',?,?)",username,answer_c.toString(),answer_b.toString());
 		response.sendRedirect(request.getContextPath());
 	}
 	
@@ -99,7 +99,6 @@ public class UserAction extends HttpServlet {
 				if(strs[j].indexOf("x")>-1)n.put("未选择",n.get("未选择")+1);
 			}
 		}
-		System.out.println(per_c);
 		Map<String, List<Integer>> per_opts=new HashMap<String, List<Integer>>();
 		for(Map<String, Integer> m:per_c)
 			for(String key:m.keySet()){
@@ -117,14 +116,12 @@ public class UserAction extends HttpServlet {
 	public void zhuce(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String name=request.getParameter("name");
 		String pwd=request.getParameter("pwd");
-		DBUtil.update("insert into user(username,password) values(?,?)",name,pwd);
-		//数据库存储对应用户
-		request.getSession().setAttribute("user",name);
-		request.getRequestDispatcher("denglu.jsp").forward(request, response);
+		DBUtil.update("insert into user(name,pwd) values(?,?)",name,pwd);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 	public void jiaoyan(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 			String name=request.getParameter("name");
-			List<Map<String, Object>> l= DBUtil.query("select * from user where username=?",name);
+			List<Map<String, Object>> l= DBUtil.query("select * from user where name=? and role='student'",name);
 			String flag="false";	//名字是否重复的标志位，默认为false代表不重复
 			if(l.size()>0)flag="true";
 			PrintWriter pw=response.getWriter();

@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<h1>大学生在线问卷调查</h1>
 	<div class="main-agileits">
 		<div class="form-w3-agile">
-			<h2 class="sub-agileits-w3layouts">登录</h2>
+			<h2 class="sub-agileits-w3layouts">登&nbsp;&nbsp;&nbsp;录</h2>
 			<form action="user" method="post">
 					<input type="hidden" name="method" value="login">
 					<input type="text" name="name" placeholder="用户" required="" />

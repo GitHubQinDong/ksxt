@@ -23,8 +23,8 @@
       <div class="t-s-l">
        <span class="left-line"></span>
        <select>
-       		<option>搜用户&nbsp;&nbsp;
-       		<option>搜试题&nbsp;&nbsp;
+       		<option>搜&nbsp;用&nbsp;户&nbsp;</option>
+       		<option>搜&nbsp;试&nbsp;题&nbsp;</option>
        </select>
       </div>
       <div class="t-s-l">
@@ -112,7 +112,6 @@
 </body>
 <script src="js/echarts.js"></script>
 <script type="text/javascript">
-
 var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 option = {
