@@ -11,7 +11,7 @@
 .close:hover{background: url(../img/close-bg.png)  no-repeat center;}
 .l-tab-links ul li{float:left;margin-right:5px;position:relative;overflow:hidden;font-size:14px;line-height:36px;}
 .l-tab-links ul li a{padding:0 8px 0 25px;color:#fff;}
-.l-tab-content{height:100%;bottom:36;background:#eee;position:relative;overflow: auto;}
+.l-tab-content{height:95.5%;background:#eee;position:relative;overflow: auto;}
 .tab-content-item{height:100%;display:block;}
 .home{padding:20px 24px;position:absolute;left:0;top:0;right:0;bottom:0;}
 

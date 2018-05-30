@@ -1,12 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <% String path = request.getContextPath();
    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <html>
 <head>
 	<title>管理员页面</title>
-	<link  type="text/css" rel="stylesheet"  href="css/style.css"/>
+	<link  type="text/css" rel="stylesheet"  href="css/style1.css"/>
 	<link  type="text/css" rel="stylesheet"  href="css/index.css"/>
 	<script  src="js/jquery-1.11.3.min.js"></script>
 	<script  src="js/menu.js"></script><!-- 动态菜单JS -->
@@ -65,19 +66,27 @@
      <p class="fumenu">用户管理</p>
      <img class="xiala" src="img/xiala.png" />
      <div class="list-p">
-      <p class="zcd" id="zcd5">管理用户</p>
-      <p class="zcd" id="zcd6">流程批准</p>
-      <p class="zcd" id="zcd7">用户统计</p>
+      <p class="zcd" id="zcd1">管理用户</p>
+      <p class="zcd" id="zcd2">流程批准</p>
+      <p class="zcd" id="zcd3">用户统计</p>
      </div>
     </li>
     <li class="menu-list-02">
      <p class="fumenu">试题管理</p>
      <img class="xiala" src="img/xiala.png" />
      <div class="list-p">
-      <p class="zcd" id="zcd5">选择题</p>
-      <p class="zcd" id="zcd6">填空题</p>
-      <p class="zcd" id="zcd7">简答题</p>
+      <p class="zcd" id="zcd4">选择题</p>
+      <p class="zcd" id="zcd5">填空题</p>
+      <p class="zcd" id="zcd6">简答题</p>
       <p class="zcd" id="zcd7">试题信息</p>
+     </div>
+    </li>
+    <li class="menu-list-01" >
+     <p class="fumenu">答题查询</p>
+     <img class="xiala" src="img/xiala.png" />
+     <div class="list-p">
+      <p class="zcd" id="zcd8">管理用户</p>
+      <p class="zcd" id="zcd9">流程批准</p>
      </div>
     </li>
    </ul>
@@ -87,7 +96,7 @@
     <div class="l-tab-links">
      <ul style="left:0;">
       <li class="l-select">
-       <a href="#" style="padding:0 25px;">首页</a>
+       <span style="padding:0 25px;">问卷调查结果统计</span>
       </li>
      </ul>
     </div>
@@ -103,6 +112,7 @@
 </body>
 <script src="js/echarts.js"></script>
 <script type="text/javascript">
+
 var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 option = {
@@ -124,7 +134,7 @@ option = {
     xAxis : [
         {
             type : 'category',
-            data : ['周一','周二','周三','周四','周五','周六','周日']
+            data : [<c:forEach var="i" begin="1" end="${fn:length(per_c['A'])}">'${i}',</c:forEach>]
         }
     ],
     yAxis : [
@@ -133,54 +143,14 @@ option = {
         }
     ],
     series : [
+		<c:forEach var="i" items='${per_c}'>
         {
-            name:'A',
+            name:'${i.key}',
             type:'bar',
             stack:'选项',
-            data:[320, 332, 301, 334, 390, 330, 320]
+            data:${i.value}
         },
-        {
-            name:'B',
-            type:'bar',
-            stack:'选项',
-            data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name:'C',
-            type:'bar',
-            stack:'选项',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-            name:'D',
-            type:'bar',
-            stack:'选项',
-            data:[150, 232, 201, 154, 190, 330, 410]
-        },
-        {
-            name:'E',
-            type:'bar',
-            stack:'选项',
-            data:[862, 1018, 964, 1026, 1679, 1600, 1570],
-        },
-        {
-            name:'F',
-            type:'bar',
-            stack:'选项',
-            data:[620, 732, 701, 734, 1090, 1130, 1120]
-        },
-        {
-            name:'G',
-            type:'bar',
-            stack:'选项',
-            data:[120, 132, 101, 134, 290, 230, 220]
-        },
-        {
-            name:'未选择',
-            type:'bar',
-            stack:'选项',
-            data:[60, 72, 71, 74, 190, 130, 110]
-        }
+        </c:forEach>
     ]
 };
 if (option && typeof option === "object") {
